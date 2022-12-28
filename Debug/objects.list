@@ -1,4 +1,4 @@
-"./Src/008i2c-master-tx-testing.o"
+"./Src/009i2c-master-tx-rx-testing.o"
 "./Src/syscalls.o"
 "./Src/sysmem.o"
 "./Startup/startup_stm32f401retx.o"

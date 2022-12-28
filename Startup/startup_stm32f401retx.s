@@ -12,7 +12,7 @@
  ******************************************************************************
  * @attention
  *
- * Copyright (c) ${year} STMicroelectronics.
+ * Copyright (c) 2022 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -97,7 +97,7 @@ LoopFillZerobss:
   bl main
 
 LoopForever:
-    b LoopForever
+  b LoopForever
 
   .size Reset_Handler, .-Reset_Handler
 
@@ -154,13 +154,13 @@ g_pfnVectors:
   .word	EXTI2_IRQHandler             			/* EXTI Line2 interrupt                                                            */
   .word	EXTI3_IRQHandler             			/* EXTI Line3 interrupt                                                            */
   .word	EXTI4_IRQHandler             			/* EXTI Line4 interrupt                                                            */
-  .word	0                            			/* Reserved                                                                        */
-  .word	0                            			/* Reserved                                                                        */
-  .word	0                            			/* Reserved                                                                        */
-  .word	0                            			/* Reserved                                                                        */
-  .word	0                            			/* Reserved                                                                        */
-  .word	0                            			/* Reserved                                                                        */
-  .word	0                            			/* Reserved                                                                        */
+  .word	DMA1_Stream0_IRQHandler      			/* DMA1 Stream0 global interrupt                                                   */
+  .word	DMA1_Stream1_IRQHandler      			/* DMA1 Stream1 global interrupt                                                   */
+  .word	DMA1_Stream2_IRQHandler      			/* DMA1 Stream2 global interrupt                                                   */
+  .word	DMA1_Stream3_IRQHandler      			/* DMA1 Stream3 global interrupt                                                   */
+  .word	DMA1_Stream4_IRQHandler      			/* DMA1 Stream4 global interrupt                                                   */
+  .word	DMA1_Stream5_IRQHandler      			/* DMA1 Stream5 global interrupt                                                   */
+  .word	DMA1_Stream6_IRQHandler      			/* DMA1 Stream6 global interrupt                                                   */
   .word	ADC_IRQHandler               			/* ADC1 global interrupt                                                           */
   .word	0                            			/* Reserved                                                                        */
   .word	0                            			/* Reserved                                                                        */
@@ -190,7 +190,7 @@ g_pfnVectors:
   .word	0                            			/* Reserved                                                                        */
   .word	0                            			/* Reserved                                                                        */
   .word	0                            			/* Reserved                                                                        */
-  .word	0                            			/* Reserved                                                                        */
+  .word	DMA1_Stream7_IRQHandler      			/* DMA1 Stream7 global interrupt                                                   */
   .word	0                            			/* Reserved                                                                        */
   .word	SDIO_IRQHandler              			/* SDIO global interrupt                                                           */
   .word	TIM5_IRQHandler              			/* TIM5 global interrupt                                                           */
@@ -199,11 +199,11 @@ g_pfnVectors:
   .word	0                            			/* Reserved                                                                        */
   .word	0                            			/* Reserved                                                                        */
   .word	0                            			/* Reserved                                                                        */
-  .word	0                            			/* Reserved                                                                        */
-  .word	0                            			/* Reserved                                                                        */
-  .word	0                            			/* Reserved                                                                        */
-  .word	0                            			/* Reserved                                                                        */
-  .word	0                            			/* Reserved                                                                        */
+  .word	DMA2_Stream0_IRQHandler      			/* DMA2 Stream0 global interrupt                                                   */
+  .word	DMA2_Stream1_IRQHandler      			/* DMA2 Stream1 global interrupt                                                   */
+  .word	DMA2_Stream2_IRQHandler      			/* DMA2 Stream2 global interrupt                                                   */
+  .word	DMA2_Stream3_IRQHandler      			/* DMA2 Stream3 global interrupt                                                   */
+  .word	DMA2_Stream4_IRQHandler      			/* DMA2 Stream4 global interrupt                                                   */
   .word	0                            			/* Reserved                                                                        */
   .word	0                            			/* Reserved                                                                        */
   .word	0                            			/* Reserved                                                                        */
@@ -211,9 +211,9 @@ g_pfnVectors:
   .word	0                            			/* Reserved                                                                        */
   .word	0                            			/* Reserved                                                                        */
   .word	OTG_FS_IRQHandler            			/* USB On The Go FS global interrupt                                               */
-  .word	0                            			/* Reserved                                                                        */
-  .word	0                            			/* Reserved                                                                        */
-  .word	0                            			/* Reserved                                                                        */
+  .word	DMA2_Stream5_IRQHandler      			/* DMA2 Stream5 global interrupt                                                   */
+  .word	DMA2_Stream6_IRQHandler      			/* DMA2 Stream6 global interrupt                                                   */
+  .word	DMA2_Stream7_IRQHandler      			/* DMA2 Stream7 global interrupt                                                   */
   .word	USART6_IRQHandler            			/* USART6 global interrupt                                                         */
   .word	I2C3_EV_IRQHandler           			/* I2C3 event interrupt                                                            */
   .word	I2C3_ER_IRQHandler           			/* I2C3 error interrupt                                                            */
@@ -224,7 +224,7 @@ g_pfnVectors:
   .word	0                            			/* Reserved                                                                        */
   .word	0                            			/* Reserved                                                                        */
   .word	0                            			/* Reserved                                                                        */
-  .word	FPU_IRQHandler               			/* Floating point interrupt                                                        */
+  .word	0                            			/* Reserved                                                                        */
   .word	0                            			/* Reserved                                                                        */
   .word	0                            			/* Reserved                                                                        */
   .word	SPI4_IRQHandler              			/* SPI4 global interrupt                                                           */
@@ -294,6 +294,27 @@ g_pfnVectors:
 	.weak	EXTI4_IRQHandler
 	.thumb_set EXTI4_IRQHandler,Default_Handler
 
+	.weak	DMA1_Stream0_IRQHandler
+	.thumb_set DMA1_Stream0_IRQHandler,Default_Handler
+
+	.weak	DMA1_Stream1_IRQHandler
+	.thumb_set DMA1_Stream1_IRQHandler,Default_Handler
+
+	.weak	DMA1_Stream2_IRQHandler
+	.thumb_set DMA1_Stream2_IRQHandler,Default_Handler
+
+	.weak	DMA1_Stream3_IRQHandler
+	.thumb_set DMA1_Stream3_IRQHandler,Default_Handler
+
+	.weak	DMA1_Stream4_IRQHandler
+	.thumb_set DMA1_Stream4_IRQHandler,Default_Handler
+
+	.weak	DMA1_Stream5_IRQHandler
+	.thumb_set DMA1_Stream5_IRQHandler,Default_Handler
+
+	.weak	DMA1_Stream6_IRQHandler
+	.thumb_set DMA1_Stream6_IRQHandler,Default_Handler
+
 	.weak	ADC_IRQHandler
 	.thumb_set ADC_IRQHandler,Default_Handler
 
@@ -354,6 +375,9 @@ g_pfnVectors:
 	.weak	EXTI18_OTG_FS_WKUP_IRQHandler
 	.thumb_set EXTI18_OTG_FS_WKUP_IRQHandler,Default_Handler
 
+	.weak	DMA1_Stream7_IRQHandler
+	.thumb_set DMA1_Stream7_IRQHandler,Default_Handler
+
 	.weak	SDIO_IRQHandler
 	.thumb_set SDIO_IRQHandler,Default_Handler
 
@@ -363,8 +387,32 @@ g_pfnVectors:
 	.weak	SPI3_IRQHandler
 	.thumb_set SPI3_IRQHandler,Default_Handler
 
+	.weak	DMA2_Stream0_IRQHandler
+	.thumb_set DMA2_Stream0_IRQHandler,Default_Handler
+
+	.weak	DMA2_Stream1_IRQHandler
+	.thumb_set DMA2_Stream1_IRQHandler,Default_Handler
+
+	.weak	DMA2_Stream2_IRQHandler
+	.thumb_set DMA2_Stream2_IRQHandler,Default_Handler
+
+	.weak	DMA2_Stream3_IRQHandler
+	.thumb_set DMA2_Stream3_IRQHandler,Default_Handler
+
+	.weak	DMA2_Stream4_IRQHandler
+	.thumb_set DMA2_Stream4_IRQHandler,Default_Handler
+
 	.weak	OTG_FS_IRQHandler
 	.thumb_set OTG_FS_IRQHandler,Default_Handler
+
+	.weak	DMA2_Stream5_IRQHandler
+	.thumb_set DMA2_Stream5_IRQHandler,Default_Handler
+
+	.weak	DMA2_Stream6_IRQHandler
+	.thumb_set DMA2_Stream6_IRQHandler,Default_Handler
+
+	.weak	DMA2_Stream7_IRQHandler
+	.thumb_set DMA2_Stream7_IRQHandler,Default_Handler
 
 	.weak	USART6_IRQHandler
 	.thumb_set USART6_IRQHandler,Default_Handler
@@ -374,9 +422,6 @@ g_pfnVectors:
 
 	.weak	I2C3_ER_IRQHandler
 	.thumb_set I2C3_ER_IRQHandler,Default_Handler
-
-	.weak	FPU_IRQHandler
-	.thumb_set FPU_IRQHandler,Default_Handler
 
 	.weak	SPI4_IRQHandler
 	.thumb_set SPI4_IRQHandler,Default_Handler

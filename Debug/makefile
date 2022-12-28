@@ -34,34 +34,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := target-drivers
+BUILD_ARTIFACT_NAME := target-STM32F401-drivers-I2C-IT
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-target-drivers.elf \
+target-STM32F401-drivers-I2C-IT.elf \
 
 MAP_FILES += \
-target-drivers.map \
+target-STM32F401-drivers-I2C-IT.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-target-drivers.list \
+target-STM32F401-drivers-I2C-IT.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: target-drivers.elf secondary-outputs
+main-build: target-STM32F401-drivers-I2C-IT.elf secondary-outputs
 
 # Tool invocations
-target-drivers.elf target-drivers.map: $(OBJS) $(USER_OBJS) C:\Users\r.freitas\Documents\Rafaela\Cursos\Microcontroller\ Embedded\ C\ Programming\ -\ Absolute\ Beginners\Embedded-C\My_workspace\target\target-drivers\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "target-drivers.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\r.freitas\Documents\Rafaela\Cursos\Microcontroller Embedded C Programming - Absolute Beginners\Embedded-C\My_workspace\target\target-drivers\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="target-drivers.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+target-STM32F401-drivers-I2C-IT.elf target-STM32F401-drivers-I2C-IT.map: $(OBJS) $(USER_OBJS) D:\Estudos\Udemy\My_workspace\target\target-STM32F401-drivers-I2C-IT\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "target-STM32F401-drivers-I2C-IT.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\Estudos\Udemy\My_workspace\target\target-STM32F401-drivers-I2C-IT\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="target-STM32F401-drivers-I2C-IT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -70,14 +70,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-target-drivers.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "target-drivers.list"
+target-STM32F401-drivers-I2C-IT.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "target-STM32F401-drivers-I2C-IT.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) default.size.stdout target-drivers.elf target-drivers.list target-drivers.map
+	-$(RM) default.size.stdout target-STM32F401-drivers-I2C-IT.elf target-STM32F401-drivers-I2C-IT.list target-STM32F401-drivers-I2C-IT.map
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

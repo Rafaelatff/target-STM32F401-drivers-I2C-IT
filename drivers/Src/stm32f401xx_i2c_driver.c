@@ -368,9 +368,49 @@ uint8_t I2C_MasterReceiveDataIT(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer, ui
 	return busystate;
 }
 
+void I2C_SlaveSendData(I2C_RegDef_t *pI2C, uint8_t data){
+	pI2C-> DR = data;
+}
+uint8_t I2C_SlaveReceiveData(I2C_RegDef_t *pI2C){
+	return (uint8_t) pI2C->DR;
+}
 
-void I2C_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnOrDi);
-void I2C_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority);
+void I2C_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnOrDi){
+	if (EnOrDi == ENABLE){
+			if(IRQNumber <= 32){
+				//program ISER0 register
+				*NVIC_ISER0 |= (1 << IRQNumber);
+			}else if (IRQNumber > 31 &&  IRQNumber < 64){ //32 to 63
+				//program ISER1 register
+				*NVIC_ISER1 |= (1 << IRQNumber % 32);
+			}else if (IRQNumber >= 64 &&  IRQNumber < 96){ // 64 to 95 (it ends in 81 for our MCU)
+				//program ISER2 register
+				*NVIC_ISER2 |= (1 << IRQNumber % 64);
+			}
+		}else{
+			if(IRQNumber <= 32){
+				//program ICER0 register
+				*NVIC_ICER0 |= (1 << IRQNumber);
+			}else if (IRQNumber > 31 &&  IRQNumber < 64){
+				//program ICER1 register
+				*NVIC_ICER1 |= (1 << IRQNumber % 32);
+			}else if (IRQNumber >= 64 &&  IRQNumber < 96){
+				//program ICER2 register
+				*NVIC_ICER2 |= (1 << IRQNumber % 64);
+			}
+		}
+}
+void I2C_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority){
+	//1. first lets find out the IPR register
+		uint8_t iprx = IRQNumber /4;
+		uint8_t iprx_section = IRQNumber %4;
+
+		//*(NVIC_PR_BASE_ADDR + (iprx*4) |= (IRQPriority << (8 * iprx_section));
+			//lower 4 bits are not implemented, so we need to shift 8 bits to the right
+
+		uint8_t shift_amout = (8 * iprx_section) + (8 - NO_PR_BITS_IMPLEMENTED);
+		*(NVIC_PR_BASE_ADDR + iprx) |= (IRQPriority << shift_amout);
+}
 
 void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle){
 	uint32_t temp1, temp2, temp3;
@@ -444,6 +484,11 @@ void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle){
 			if(pI2CHandle->TxRxState == I2C_BUSY_IN_TX){
 				I2C_MasterHandleTXEInterrupt(pI2CHandle);
 			}
+		} else{ // CHECK FOR DEVICE MODE (for SLAVE)
+			//SR2 -> TRA says if device is in transmitter or receiver mode
+			if (pI2CHandle->pI2Cx->SR2 & (1 << I2C_SR2_TRA)){
+				I2C_ApplicationEventCallback(pI2CHandle, I2C_EV_DATA_REQ);
+			}
 		}
 	}
 
@@ -455,6 +500,10 @@ void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle){
 			// The device is master
 			if(pI2CHandle->TxRxState == I2C_BUSY_IN_RX){
 				I2C_MasterHandleRXNEInterrupt(pI2CHandle);
+			}
+		} else { // The device is SLAVE
+			if (pI2CHandle->pI2Cx->SR2 & (1 << I2C_SR2_TRA)){
+				I2C_ApplicationEventCallback(pI2CHandle, I2C_EV_DATA_RCV);
 			}
 		}
 	}
@@ -600,6 +649,18 @@ void I2C_ER_IRQHandling(I2C_Handle_t *pI2CHandle){
 		pI2CHandle->pI2Cx->SR1 &= ~( 1 << I2C_SR1_TIMEOUT);
 		//Implement the code to notify the application about the error
 		I2C_ApplicationEventCallback(pI2CHandle,I2C_ERROR_TIMEOUT);
+	}
+}
+
+void I2C_SlaveEnableDisableCallbackEvents(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi){
+	if(EnOrDi == ENABLE){
+		pI2Cx->CR2 |= (1 << I2C_CR2_ITBUFEN);
+		pI2Cx->CR2 |= (1 << I2C_CR2_ITERREN);
+		pI2Cx->CR2 |= (1 << I2C_CR2_ITEVTEN);
+	} else{
+		pI2Cx->CR2 &= ~(1 << I2C_CR2_ITBUFEN);
+		pI2Cx->CR2 &= ~(1 << I2C_CR2_ITERREN);
+		pI2Cx->CR2 &= ~(1 << I2C_CR2_ITEVTEN);
 	}
 }
 

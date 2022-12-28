@@ -94,6 +94,8 @@ typedef struct{
 #define 	I2C_ERROR_AF    	5
 #define 	I2C_ERROR_OVR  		6
 #define 	I2C_ERROR_TIMEOUT 	7
+#define 	I2C_EV_DATA_REQ		8
+#define 	I2C_EV_DATA_RCV		9
 
 /*******************************************************
  * 			API supported by this driver
@@ -120,6 +122,9 @@ void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer, uint8_t
 uint8_t I2C_MasterSendDataIT(I2C_Handle_t *pI2CHandle,uint8_t *pTxbuffer, uint32_t Len, uint8_t SlaveAddr,uint8_t Sr);
 uint8_t I2C_MasterReceiveDataIT(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr);
 
+void I2C_SlaveSendData(I2C_RegDef_t *pI2C, uint8_t data);
+uint8_t I2C_SlaveReceiveData(I2C_RegDef_t *pI2C);
+
 /*
  *  IRQ Configuration and ISR Handling
  */
@@ -142,6 +147,7 @@ void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx);
 void I2C_PeripheralControl(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi);
 uint32_t RCC_GetPCLK1Value(void);
 uint32_t RCC_GetPLLOutputClock (void);
+void I2C_SlaveEnableDisableCallbackEvents(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi);
 
 /*
  * 	Application callback
