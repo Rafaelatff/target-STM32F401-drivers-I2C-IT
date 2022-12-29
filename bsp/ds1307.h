@@ -46,7 +46,7 @@
 
 #define TIME_FORMAT_12HR_AM		0
 #define TIME_FORMAT_12HR_PM		1
-#define TIME_FORMAT_24HR
+#define TIME_FORMAT_24HR		2
 
 #define DS1307_I2C_ADDR		0x68
 
