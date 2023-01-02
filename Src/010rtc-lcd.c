@@ -10,10 +10,9 @@
  * 		SDA_PIN		B9
  * 		SCL_PIN 	B8
  * 		// MCU1 - 270
- * 		// Absolute Beginners - 54 (ITM code) and 55 Testing printf over ARM Cortex M4 ITM+SWO line
+ * 		// Absolute Beginners - 54 (ITM code) and
+ * 		// 55 Testing printf over ARM Cortex M4 ITM+SWO line
  */
-
-
 
 #include <stdio.h>
 #include "ds1307.h"
@@ -50,7 +49,6 @@ void init_systick_timer(uint32_t tick_hz) // COPIED FROM AUTHOR
     *pSCSR |= ( 1 << 0); //enables the counter
 }
 
-
 int main (){
 	RTC_time_t current_time;
 	RTC_date_t current_date;
@@ -66,6 +64,8 @@ int main (){
 
 	init_systick_timer(1); // 1 interrupt per sec
 
+	printf("Systick init pass\n");
+
 	current_date.day = FRIDAY;
 	current_date.date = 15;
 	current_date.month = 1;
@@ -77,7 +77,12 @@ int main (){
 	current_time.time_format = TIME_FORMAT_24HR;
 
 	ds1307_set_current_date(&current_date);
+
+	printf("RTC with initial value for date\n");
+
 	ds1307_set_current_time(&current_time);
+
+	printf("RTC with initial value for time\n");
 
 	ds1307_get_current_date(&current_date);
 	ds1307_get_current_time(&current_time);
@@ -91,6 +96,9 @@ int main (){
 	}
 	printf("Current date = %s <%s>\n", date_to_string(&current_date), get_day_of_week(current_date.day));
 
+	printf("Main will enter while (1) loop\n");
+
+	while(1);
 }
 /// HANDLER
 void Systick_Handler(void){
@@ -108,11 +116,7 @@ void Systick_Handler(void){
 		printf ("Current time = %s\n", time_to_string(&current_time)); // 04:25:00
 	}
 	printf("Current date = %s <%s>\n", date_to_string(&current_date), get_day_of_week(current_date.day));
-
-	while(1);
-	return 0;
 }
-
 
 char* get_day_of_week(uint8_t i){
 	char* days[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};

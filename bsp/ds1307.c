@@ -67,7 +67,7 @@ void ds1307_set_current_time(RTC_time_t *rtc_time){
 	} else{
 		hrs |= (1 << 6);	//bit 6 = 1 = 12h format
 		// bit 5 = 1 -> PM   and bit 5 = 0 -> AM
-		hrs = (rtc_time->time_format == TIME_FORMAT_12HR_PM) ? hrs |= (1<<5) : hrs & ~(1<<5);
+		hrs = (rtc_time->time_format == TIME_FORMAT_12HR_PM) ? hrs | (1<<5) : hrs & ~(1<<5);
 	}
 	ds1307_write(DS1307_ADDR_HRS, hrs);
 }
