@@ -61,8 +61,8 @@ all: main-build
 main-build: target-STM32F401-drivers-I2C-IT.elf secondary-outputs
 
 # Tool invocations
-target-STM32F401-drivers-I2C-IT.elf target-STM32F401-drivers-I2C-IT.map: $(OBJS) $(USER_OBJS) C:\Users\r.freitas\Documents\Rafaela\Cursos\Microcontroller\ Embedded\ C\ Programming\ -\ Absolute\ Beginners\Embedded-C\My_workspace\target\target-STM32F401-drivers-I2C-IT\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "target-STM32F401-drivers-I2C-IT.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\r.freitas\Documents\Rafaela\Cursos\Microcontroller Embedded C Programming - Absolute Beginners\Embedded-C\My_workspace\target\target-STM32F401-drivers-I2C-IT\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="target-STM32F401-drivers-I2C-IT.map" -Wl,--gc-sections -static -specs=rdimon.specs -lc -lrdimon --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+target-STM32F401-drivers-I2C-IT.elf target-STM32F401-drivers-I2C-IT.map: $(OBJS) $(USER_OBJS) D:\Estudos\Udemy\My_workspace\target\target-STM32F401-drivers-I2C-IT\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "target-STM32F401-drivers-I2C-IT.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\Estudos\Udemy\My_workspace\target\target-STM32F401-drivers-I2C-IT\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="target-STM32F401-drivers-I2C-IT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

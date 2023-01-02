@@ -5,10 +5,20 @@
  *      Author: r.freitas
  */
 
+/*
+ * 			  I2C
+ * 		SDA_PIN		B9
+ * 		SCL_PIN 	B8
+ * 		// MCU1 - 270
+ * 		// Absolute Beginners - 54 (ITM code) and 55 Testing printf over ARM Cortex M4 ITM+SWO line
+ */
+
+
+
 #include <stdio.h>
 #include "ds1307.h"
 
-extern void initialise_monitor_handles(void);
+//extern void initialise_monitor_handles(void); //// For SEMI HOSTING only
 
 char* get_day_of_week(uint8_t t);
 char* time_to_string(RTC_time_t *rtc_time);
@@ -45,12 +55,12 @@ int main (){
 	RTC_time_t current_time;
 	RTC_date_t current_date;
 
-	initialise_monitor_handles();
+	// initialise_monitor_handles(); // For SEMI HOSTING only
 
 	printf("RTC test\n");
 
 	if(ds1307_init()){
-		printf("RTC init has failer");
+		printf("RTC init has failed");
 		while(1);
 	}
 

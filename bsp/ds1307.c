@@ -98,7 +98,10 @@ void ds1307_set_current_date(RTC_date_t *rtc_date){
 	ds1307_write(DS1307_ADDR_DAY, binary_to_bcd(rtc_date->day));
 }
 void ds1307_get_current_date(RTC_date_t *rtc_date){
-
+	rtc_date->day =  bcd_to_binary(ds1307_read(DS1307_ADDR_DAY));
+	rtc_date->date = bcd_to_binary(ds1307_read(DS1307_ADDR_DATE));
+	rtc_date->month = bcd_to_binary(ds1307_read(DS1307_ADDR_MONTH));
+	rtc_date->year = bcd_to_binary(ds1307_read(DS1307_ADDR_YEAR));
 }
 
 /*
@@ -122,7 +125,7 @@ static void ds1307_i2c_pin_config(void){
 	GPIO_Init(&i2c_sda);
 
 	// I2C1_SCL - PB8 (AF04)
-	i2c_sda.pGPIOx = DS1307_I2C_GPIO_PORT;
+	i2c_scl.pGPIOx = DS1307_I2C_GPIO_PORT;
 	i2c_scl.GPIO_PinConfig.GPIO_PinAltFunMode = 4;
 	i2c_scl.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
 	i2c_scl.GPIO_PinConfig.GPIO_PinNumber = DS1307_I2C_SCL_PIN;
