@@ -17,6 +17,10 @@
 #include <stdio.h>
 #include "ds1307.h"
 
+void delay(void){
+	for (uint32_t i=0; i<5000000; i++);
+}
+
 //extern void initialise_monitor_handles(void); //// For SEMI HOSTING only
 
 char* get_day_of_week(uint8_t t);
@@ -62,7 +66,7 @@ int main (){
 		while(1);
 	}
 
-	init_systick_timer(1); // 1 interrupt per sec
+	//init_systick_timer(1); // 1 interrupt per sec
 
 	printf("Systick init pass\n");
 
@@ -84,6 +88,23 @@ int main (){
 
 	printf("RTC with initial value for time\n");
 
+	while(1){
+		ds1307_get_current_date(&current_date);
+		ds1307_get_current_time(&current_time);
+
+		delay();
+
+		char *am_pm;
+		if(current_time.time_format != TIME_FORMAT_24HR){
+			am_pm = (current_time.time_format) ? "PM" : "AM";
+			printf ("Current time = %s %s\n", time_to_string(&current_time), am_pm); // 04:25:00 PM
+		} else{
+			printf ("Current time = %s\n", time_to_string(&current_time)); // 04:25:00
+		}
+		printf("Current date = %s <%s>\n", date_to_string(&current_date), get_day_of_week(current_date.day));
+		delay();
+		delay();
+	}
 	ds1307_get_current_date(&current_date);
 	ds1307_get_current_time(&current_time);
 
