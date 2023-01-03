@@ -70,13 +70,13 @@ int main (){
 
 	printf("Systick init pass\n");
 
-	current_date.day = FRIDAY;
-	current_date.date = 15;
+	current_date.day = TUESDAY;
+	current_date.date = 03;
 	current_date.month = 1;
-	current_date.year = 21;
+	current_date.year = 23;
 
-	current_time.hours = 4;
-	current_time.minutes = 25;
+	current_time.hours = 9;
+	current_time.minutes = 56;
 	current_time.seconds = 0;
 	current_time.time_format = TIME_FORMAT_24HR;
 
@@ -88,23 +88,6 @@ int main (){
 
 	printf("RTC with initial value for time\n");
 
-	while(1){
-		ds1307_get_current_date(&current_date);
-		ds1307_get_current_time(&current_time);
-
-		delay();
-
-		char *am_pm;
-		if(current_time.time_format != TIME_FORMAT_24HR){
-			am_pm = (current_time.time_format) ? "PM" : "AM";
-			printf ("Current time = %s %s\n", time_to_string(&current_time), am_pm); // 04:25:00 PM
-		} else{
-			printf ("Current time = %s\n", time_to_string(&current_time)); // 04:25:00
-		}
-		printf("Current date = %s <%s>\n", date_to_string(&current_date), get_day_of_week(current_date.day));
-		delay();
-		delay();
-	}
 	ds1307_get_current_date(&current_date);
 	ds1307_get_current_time(&current_time);
 
@@ -122,7 +105,7 @@ int main (){
 	while(1);
 }
 /// HANDLER
-void Systick_Handler(void){
+void SysTick_Handler(void){ // Tick UPCASE
 	RTC_time_t current_time;
 	RTC_date_t current_date;
 
