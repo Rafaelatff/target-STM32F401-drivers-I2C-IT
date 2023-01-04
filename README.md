@@ -37,7 +37,7 @@ It's been already created the IRQ number macros (from Table 38 of datasheet).
 
 Next, the codes implemented for writting and reading data.
 
-```
+```c
 uint8_t I2C_MasterSendDataIT(I2C_Handle_t *pI2CHandle,uint8_t *pTxbuffer, uint32_t Len, uint8_t SlaveAddr,uint8_t Sr){
 	uint8_t busystate = pI2CHandle->TxRxState;
 
@@ -97,7 +97,7 @@ We create some macros for the interrupt events:
 
 And code:
 
-```
+```c
 void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle){
 	uint32_t temp1, temp2, temp3;
 	temp1 = pI2CHandle->pI2Cx->CR2 & (1 << I2C_CR2_ITBUFEN);
